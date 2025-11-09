@@ -1,2 +1,4 @@
-# patentconnect
-A platform connecting inventors with patent professionals. Streamlining the patent process from discovery to filing with intelligent matching and collaboration tools.
+# Patentra MVP
+
+This contains the MVP platform for Patentra.
+Deployable to Vercel.
