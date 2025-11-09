@@ -1,27 +1,34 @@
-
 import { useState } from "react";
 
 export default function Signup() {
-  const [role, setRole] = useState("inventor");
+  const [role, setRole] = useState("Inventor");
+
+  const handleNext = () => {
+    localStorage.setItem("role", role);
+    window.location.href = "/login"; // go to login page
+  };
 
   return (
-    <div className="p-10 text-textlight">
-      <h1 className="text-4xl font-bold text-accent mb-6">Join PatentHive</h1>
+    <div className="p-10 text-light">
+      <h1 className="text-4xl font-bold mb-6">Join PatentHive</h1>
 
-      <label className="block mb-3 text-lg">Select your role:</label>
+      <label className="block mb-2 text-lg">Select your role:</label>
       <select
         value={role}
-        onChange={(e)=>setRole(e.target.value)}
-        className="bg-bg border border-accent p-2 rounded"
+        onChange={(e) => setRole(e.target.value)}
+        className="p-2 text-black rounded"
       >
-        <option value="inventor">Inventor</option>
-        <option value="attorney">Attorney</option>
-        <option value="company">Company / Organization</option>
+        <option>Inventor</option>
+        <option>Attorney</option>
+        <option>Company</option>
       </select>
 
-      <p className="mt-6 opacity-80">
-        Next step: We will integrate Firebase Authentication (Google + Email login).
-      </p>
+      <button
+        onClick={handleNext}
+        className="mt-6 bg-accent text-black px-6 py-3 rounded-lg font-semibold"
+      >
+        Continue
+      </button>
     </div>
   );
 }
