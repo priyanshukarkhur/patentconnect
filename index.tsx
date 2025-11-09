@@ -1,12 +1,16 @@
-import Link from 'next/link'
-export default function Home(){
+
+import Link from "next/link";
+
+export default function Home() {
   return (
-    <div style={{padding:'40px',color:'white',background:'#0d0f18',fontFamily:'sans-serif'}}>
-      <h1 style={{fontSize:'42px',marginBottom:'20px'}}>Patentra</h1>
-      <p>Connecting Inventors, Attorneys, and Companies globally.</p>
-      <div style={{marginTop:'20px'}}>
-        <Link href="/signup">Get Started</Link>
-      </div>
+    <div className="p-10 text-textlight">
+      <h1 className="text-5xl font-bold text-accent mb-4">PatentHive</h1>
+      <p className="text-lg opacity-90 max-w-xl">
+        Connecting inventors, attorneys, and companies globally using intelligent matching.
+      </p>
+      <Link href="/signup" className="inline-block mt-6 bg-accent text-black px-6 py-3 rounded-lg font-semibold">
+        Get Started
+      </Link>
     </div>
-  )
+  );
 }
