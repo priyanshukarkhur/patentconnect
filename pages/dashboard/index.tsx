@@ -1,25 +1,40 @@
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../lib/firebase";
+import { getAuth } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import app from "../../lib/firebase";
 
-export default function DashboardRouter() {
+export default function DashboardRedirect() {
   const router = useRouter();
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      // If no user -> go login
-      if (!user) return router.push("/login");
+    async function load() {
+      const user = auth.currentUser;
+      if (!user) {
+        router.push("/login");
+        return;
+      }
 
-      // Get role saved at signup (temporary storage)
-      const role = localStorage.getItem("role");
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+
+      if (!snap.exists()) {
+        router.push("/login");
+        return;
+      }
+
+      const role = snap.data().role;
 
       if (role === "Inventor") router.push("/dashboard/inventor");
       else if (role === "Attorney") router.push("/dashboard/attorney");
       else if (role === "Company") router.push("/dashboard/company");
-      else router.push("/signup"); // If no role, ask again
-    });
+      else router.push("/login");
+    }
+
+    load();
   }, []);
 
-  return <h1 style={{ textAlign: "center", marginTop: "40vh" }}>Redirecting...</h1>;
+  return <p className="text-center mt-20 text-xl text-gray-400">Loading Dashboard...</p>;
 }
